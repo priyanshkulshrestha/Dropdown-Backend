@@ -1,0 +1,16 @@
+"use strict";
+const express_1 = require("express");
+const client_controller_1 = require("../controllers/client.controller");
+const validateType_middleware_1 = require("../middlewares/validateType.middleware");
+const client_schema_1 = require("../schemas/client.schema");
+const jobPost_schema_1 = require("../schemas/jobPost.schema");
+const router = (0, express_1.Router)();
+router.get('/', client_controller_1.GetAllClientDetails);
+router.get('/:id', client_controller_1.GetAllDetails);
+router.post('/', (0, validateType_middleware_1.validateRequest)(client_schema_1.clientDetails), client_controller_1.CreateClientHandler);
+router.put('/', client_controller_1.UpdateClientHandler);
+router.delete('/', client_controller_1.DeleteClientHandler);
+router.post('/job', (0, validateType_middleware_1.validateRequest)(jobPost_schema_1.jobPostDetailsInput), client_controller_1.PostJobHandler);
+router.put('/job', client_controller_1.UpdateJobHandler);
+router.put('/job/close', client_controller_1.CloseJobHandler);
+module.exports = router;

@@ -1,0 +1,40 @@
+service: dropdown-aws
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  memorySize: 2048
+  stage: dev
+  region: ap-south-1
+  apiGateway:
+    binaryMediaTypes:
+      - '*/*'
+  environment:
+    MONGODB_URI: mongodb+srv://<username>:<password>@cluster0.s8aaa.mongodb.net/<dbname>?retryWrites=true&w=majority
+    AmazonWS_ACCESS_KEY_ID: <access-key-id>
+    AmazonWS_SECRET_ACCESS_KEY: <secret-access-key>
+    AmazonWS_REGION: <region>
+    AmazonWS_ACL: <acl>
+    AmazonWS_BUCKET_NAME: <bucket-name>
+    LOCATION_API_KEY: <location-api-key>
+
+package:
+  exclude:
+    - src/**
+    - tsconfig.json
+
+functions:
+  hello:
+    handler: dist/index.handler
+    events:
+      - httpApi:
+          path: /
+          method: ANY
+      - httpApi:
+          path: /{proxy+}
+          method: ANY
+      - schedule: 'cron(0/5 * ? * * *)' 
+
+plugins:
+  - serverless-offline

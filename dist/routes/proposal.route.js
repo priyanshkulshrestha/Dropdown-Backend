@@ -1,0 +1,10 @@
+"use strict";
+const express_1 = require("express");
+const proposal_controller_1 = require("../controllers/proposal.controller");
+const validateType_middleware_1 = require("../middlewares/validateType.middleware");
+const proposal_schema_1 = require("../schemas/proposal.schema");
+const router = (0, express_1.Router)();
+router.get('/:id', proposal_controller_1.GetAllDetails);
+router.post('/', (0, validateType_middleware_1.validateRequest)(proposal_schema_1.proposalDetails), proposal_controller_1.CreateProposalHandler);
+router.put('/:id', proposal_controller_1.UpdateProposalStatusHandler);
+module.exports = router;

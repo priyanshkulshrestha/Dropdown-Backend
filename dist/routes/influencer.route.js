@@ -1,0 +1,15 @@
+"use strict";
+const express_1 = require("express");
+const influencer_controller_1 = require("../controllers/influencer.controller");
+const validateType_middleware_1 = require("../middlewares/validateType.middleware");
+const influencer_schema_1 = require("../schemas/influencer.schema");
+const router = (0, express_1.Router)();
+router.get('/', influencer_controller_1.GetAllInfluencerDetails);
+router.get('/iscomplete', influencer_controller_1.IsCompleteInfluencerHandler);
+router.get('/:id', influencer_controller_1.GetAllDetails);
+router.post('/', (0, validateType_middleware_1.validateRequest)(influencer_schema_1.influencerDetails), influencer_controller_1.CreateInfluencerHandler);
+router.put('/', influencer_controller_1.UpdateInfluencerHandler);
+router.get('/job/:id', influencer_controller_1.GetJobsHandler);
+router.put('/job/:id', influencer_controller_1.UpdateInfluencerSavedJobsHandler);
+router.delete('/', influencer_controller_1.DeleteInfluencerHandler);
+module.exports = router;
